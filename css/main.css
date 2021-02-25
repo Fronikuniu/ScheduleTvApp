@@ -8,13 +8,17 @@ body {
   
 .shows-wrapper {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
 }
   
 .shows-wrapper .card {
     width: 24%;
     margin-bottom: 1.5%;
+    margin-right: 14px;
+}
+
+.shows-wrapper .card:nth-child(4n){
+    margin-right: 0;
 }
   
 .show-preview {
