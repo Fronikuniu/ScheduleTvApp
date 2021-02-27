@@ -63,6 +63,7 @@ class TvApp {
         closeBtn.removeEventListener('click', this.closeDetailsView);
         this.viewElems.showPreview.style.display = 'none';
         this.viewElems.showPreview.innerHTML = '';
+        document.body.style.overflowY = "scroll";
     }
 
     openDetailsView = event => {
@@ -71,6 +72,7 @@ class TvApp {
             const card = this.createShowCard(show, true);
             this.viewElems.showPreview.appendChild(card);
             this.viewElems.showPreview.style.display = 'block';
+            document.body.style.overflowY = "hidden";
         })
     }
 
@@ -78,8 +80,7 @@ class TvApp {
         const divCard = createDOMElem('div', 'card');
         const divCardBody = createDOMElem('div', 'card-body');
         const h5 = createDOMElem('h5', 'card-title', show.name);
-        const btn = createDOMElem('button', 'btn btn-primary', 'Show details');
-        let img, p;
+        let img, p, btn;
 
         if (show.image) {
             if (isDetailed) {
@@ -89,17 +90,25 @@ class TvApp {
                 img = createDOMElem('img', 'card-img-top', null, show.image.medium);
             }
         } else {
-            img = createDOMElem('img', 'card-img-top', null, 'https://via.placeholder.com/210x295');
+            img = createDOMElem('img', 'card-img-top placeholder', null, 'https://via.placeholder.com/210x295');
         }
 
-        if (show.summary) {
-            if (isDetailed) {
-                p = createDOMElem('p', 'card-text', show.summary);
-            } else {
-                p = createDOMElem('p', 'card-text', `${show.summary.slice(0, 80)} ...`);
-            }
+        const regex = /<p>|<\/p>|<i>|<\/i>|<b>|<\/b>/gm;                //
+        const subst = ``;                                               //
+        const summary = show.summary;                                   //
+        let result;                                                     //
+        if (summary == null) {                                          // Usuniecie znaczników z opisu
+            result = 'There is no summary for that show yet';           //
+        } else {                                                        //
+            result = summary.replace(regex, subst);                     //
+        }                                                               //
+        
+        if (isDetailed) {
+            btn = createDOMElem('button', 'btn btn-danger btn-card', 'Back to schedule');
+            p = createDOMElem('p', 'card-text', result);
         } else {
-            p = createDOMElem('p', 'card-text', 'There is no summary for that show yet.');
+            btn = createDOMElem('button', 'btn btn-primary btn-card', 'Show details');
+            p = createDOMElem('p', 'card-text', `${result.slice(0, 90)} ...`);
         }
 
         btn.dataset.showId = show.id;
@@ -118,11 +127,17 @@ class TvApp {
 
         return divCard;
     }
-
-    
 }
 
 document.addEventListener('DOMContentLoaded', new TvApp());
 
-//Reg exp, funkcje js
-
+//zmiana napisu buttona                                 </
+//scroll wylaczony gdy jest otwarte okno details        </
+//PAGINACJA TO STRONY PRODUKTÓW                         X
+//usuniecie znaczników z opisów - Reg exp, funkcje js   </
+//ustawienie przycisków na tej samej wysokosci          </
+//dodanie inputa zamiast select                         X
+//dodanie obsady                                        X
+//ulubione *                                            X
+//placeholder - Czesciowo naprawiony placeholder        <-/
+//Infinity scroll                                       X
