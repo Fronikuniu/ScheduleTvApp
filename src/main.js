@@ -33,15 +33,29 @@ class TvApp {
         Object.keys(this.showNameButtons).forEach(showName => {
             this.showNameButtons[showName].addEventListener('click', this.setCurrentNameFilter);
         })
+
+        this.viewElems.searchInput.addEventListener('keydown', this.buttonSubmit);
+        this.viewElems.searchButton.addEventListener('click', this.buttonSubmit);
+    }
+
+    buttonSubmit = () => {
+        if (event.key === 'Enter' || event.type === 'click') {
+            let selectedName = this.viewElems.searchInput.value;
+            getShowsByKey(selectedName)
+            .then(shows => {
+                this.renderCardsOnList(shows);
+                console.log(shows);
+            });
+        }
     }
 
     setCurrentNameFilter = () => {
-        this.selectedName = event.target.dataset.showName;
+        this.selectedName = event.target.dataset.showName;                                      // funkcja do pobierania informacji z pola select
         this.fetchAndDisplayShows();
     }
     
     fetchAndDisplayShows = () => {
-        getShowsByKey(this.selectedName).then(shows => this.renderCardsOnList(shows));
+        getShowsByKey(this.selectedName).then(shows => this.renderCardsOnList(shows));          //funkcja do pobrania danych o nazwie z pola select
     }
 
     renderCardsOnList = shows => {
@@ -136,7 +150,7 @@ document.addEventListener('DOMContentLoaded', new TvApp());
 //PAGINACJA TO STRONY PRODUKTÓW                         X
 //usuniecie znaczników z opisów - Reg exp, funkcje js   </
 //ustawienie przycisków na tej samej wysokosci          </
-//dodanie inputa zamiast select                         X
+//dodanie inputa zamiast select                         </
 //dodanie obsady                                        X
 //ulubione *                                            X
 //placeholder - Czesciowo naprawiony placeholder        <-/
