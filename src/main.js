@@ -61,7 +61,7 @@ class TvApp {
     renderCardsOnList = shows => {
         Array.from(
             document.querySelectorAll('[data-show-id]')
-        ).forEach(btn => btn.removeEventListener('click', this.openDetailsView))
+        ).forEach(btn => btn.removeEventListener('click', this.openDetailsView));
 
         this.viewElems.showsWrapper.innerHTML = '';
     
