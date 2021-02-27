@@ -50,12 +50,12 @@ class TvApp {
     }
 
     setCurrentNameFilter = () => {
-        this.selectedName = event.target.dataset.showName;                                      // funkcja do pobierania informacji z pola select
+        this.selectedName = event.target.dataset.showName;                                      // Function for download information from the select field
         this.fetchAndDisplayShows();
     }
     
     fetchAndDisplayShows = () => {
-        getShowsByKey(this.selectedName).then(shows => this.renderCardsOnList(shows));          //funkcja do pobrania danych o nazwie z pola select
+        getShowsByKey(this.selectedName).then(shows => this.renderCardsOnList(shows));          // Function for download data name from the select field
     }
 
     renderCardsOnList = shows => {
@@ -111,7 +111,7 @@ class TvApp {
         const subst = ``;                                               //
         const summary = show.summary;                                   //
         let result;                                                     //
-        if (summary == null) {                                          // Usuniecie znaczników z opisu
+        if (summary == null) {                                          // Delete marks from summary
             result = 'There is no summary for that show yet';           //
         } else {                                                        //
             result = summary.replace(regex, subst);                     //
